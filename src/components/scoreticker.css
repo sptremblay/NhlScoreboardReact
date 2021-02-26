@@ -1,0 +1,14 @@
+body {
+    background-color: black;
+    color: white;
+  }
+  
+  .team-logo {
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
+  
+  .big-text {
+    font-size: 10rem;
+  }
+  
