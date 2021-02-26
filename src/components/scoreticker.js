@@ -8,7 +8,6 @@ import '../css/nhl-logo.css';
 const NhlApiHelper = require('../utils/NhlApiHelper');
 
 class Scoreticker extends Component {
-
     constructor(props) {
         super(props);
 
@@ -44,16 +43,14 @@ class Scoreticker extends Component {
         const gamesLi = [];
         const currentGame = this.state.games[this.state.currentGameIndex];
 
-
         for (const g of this.state.games) {
             gamesLi.push(<li>{g.gamePk}</li>)
         }
         if (currentGame) {
-            if (currentGame?.status.statusCode === "1" ||
-                currentGame?.status.statusCode === "2") {
-                return <ScoretickerGameInfo currentGame={currentGame}></ScoretickerGameInfo>
+            if (currentGame?.status.statusCode < 3 ) {
+                return <ScoreboardPregame currentGame={currentGame}></ScoreboardPregame>
             } else {
-                return <ScoretickerGameResult currentGame={currentGame}></ScoretickerGameResult>
+                return <ScoreboardLive currentGame={currentGame}></ScoreboardLive>
             }
         } else {
             return <div>Loading</div>
@@ -61,7 +58,7 @@ class Scoreticker extends Component {
     }
 }
 
-const ScoretickerGameInfo = ({currentGame}) => {
+const ScoreboardPregame = ({currentGame}) => {
     let gameDate = '';
     let gameHour = '';
     if (currentGame) {
@@ -91,8 +88,8 @@ const ScoretickerGameInfo = ({currentGame}) => {
                         item
                         data-aos="zoom-in-up"
                     >
-                        <ScoretickerTeamInfo team={currentGame?.teams.home.team}
-                                             leagueRecord={currentGame?.teams.home.leagueRecord}></ScoretickerTeamInfo>
+                        <ScoreboardTeamInfo team={currentGame?.teams.home.team}
+                                             leagueRecord={currentGame?.teams.home.leagueRecord}></ScoreboardTeamInfo>
                     </Grid>
 
                     <Grid
@@ -109,8 +106,8 @@ const ScoretickerGameInfo = ({currentGame}) => {
                         item
                         data-aos="zoom-in-up"
                     >
-                        <ScoretickerTeamInfo team={currentGame?.teams.away.team}
-                                             leagueRecord={currentGame?.teams.away.leagueRecord}></ScoretickerTeamInfo>
+                        <ScoreboardTeamInfo team={currentGame?.teams.away.team}
+                                             leagueRecord={currentGame?.teams.away.leagueRecord}></ScoreboardTeamInfo>
                     </Grid>
                 </Grid>
             </div>
@@ -118,7 +115,7 @@ const ScoretickerGameInfo = ({currentGame}) => {
     </div>
 }
 
-const ScoretickerTeamInfo = ({team, leagueRecord}) => {
+const ScoreboardTeamInfo = ({team, leagueRecord}) => {
     return <Grid container
                  direction="column"
                  justify="center"
@@ -141,7 +138,7 @@ const ScoretickerTeamInfo = ({team, leagueRecord}) => {
     </Grid>;
 }
 
-class ScoretickerGameResult extends Component {
+class ScoreboardLive extends Component {
     constructor(props) {
         super(props);
 
@@ -179,7 +176,7 @@ class ScoretickerGameResult extends Component {
                     {this.state.game?.liveData.linescore?.currentPeriodOrdinal?.toUpperCase()}
                 </Typography>
                 <Typography variant="h5" align="center" className="lg-mg-bottom">
-                    {this.state.game?.liveData.linescore?.currentPeriodTimeRemaining}
+                    {this.state.game?.liveData.linescore?.currentPeriodTimeRemaining?.toUpperCase()}
                 </Typography>
                 <div className="container-fluid">
                     <Grid container
@@ -190,7 +187,7 @@ class ScoretickerGameResult extends Component {
                             item
                             data-aos="zoom-in-up"
                         >
-                            <ScoretickerTeamInfo team={this.state.game?.gameData.teams.home}></ScoretickerTeamInfo>
+                            <ScoreboardTeamInfo team={this.state.game?.gameData.teams.home}></ScoreboardTeamInfo>
                         </Grid>
 
                         <Grid
@@ -224,7 +221,7 @@ class ScoretickerGameResult extends Component {
                             item
                             data-aos="zoom-in-up"
                         >
-                            <ScoretickerTeamInfo team={this.state.game?.gameData.teams.away}></ScoretickerTeamInfo>
+                            <ScoreboardTeamInfo team={this.state.game?.gameData.teams.away}></ScoreboardTeamInfo>
                         </Grid>
                     </Grid>
                 </div>
