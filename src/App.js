@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router,
   Switch,
-  Route,
-  Link } from 'react-router-dom';
+  Route } from 'react-router-dom';
 import Scoreticker from "./components/scoreticker";
 
 function App() {
