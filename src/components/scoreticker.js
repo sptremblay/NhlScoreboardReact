@@ -5,7 +5,7 @@ import equal from "fast-deep-equal/react";
 import './scoreticker.css';
 import '../css/nhl-logo.css';
 
-const NhlApiHelper = require('../utils/NhlApiHelper');
+import {NhlApiHelper} from '../utils/NhlApiHelper';
 
 class Scoreticker extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class Scoreticker extends Component {
             gamesLi.push(<li>{g.gamePk}</li>)
         }
         if (currentGame) {
-            if (currentGame?.status.statusCode < 3 ) {
+            if (currentGame?.status.statusCode < 3) {
                 return <ScoreboardPregame currentGame={currentGame}></ScoreboardPregame>
             } else {
                 return <ScoreboardLive currentGame={currentGame}></ScoreboardLive>
@@ -89,7 +89,7 @@ const ScoreboardPregame = ({currentGame}) => {
                         data-aos="zoom-in-up"
                     >
                         <ScoreboardTeamInfo team={currentGame?.teams.home.team}
-                                             leagueRecord={currentGame?.teams.home.leagueRecord}></ScoreboardTeamInfo>
+                                            leagueRecord={currentGame?.teams.home.leagueRecord}></ScoreboardTeamInfo>
                     </Grid>
 
                     <Grid
@@ -107,35 +107,12 @@ const ScoreboardPregame = ({currentGame}) => {
                         data-aos="zoom-in-up"
                     >
                         <ScoreboardTeamInfo team={currentGame?.teams.away.team}
-                                             leagueRecord={currentGame?.teams.away.leagueRecord}></ScoreboardTeamInfo>
+                                            leagueRecord={currentGame?.teams.away.leagueRecord}></ScoreboardTeamInfo>
                     </Grid>
                 </Grid>
             </div>
         </div>
     </div>
-}
-
-const ScoreboardTeamInfo = ({team, leagueRecord}) => {
-    return <Grid container
-                 direction="column"
-                 justify="center"
-                 alignItems="center"
-    >
-        <Grid item>
-            <div style={{width: 600, height: 600}}
-                 className={`team-logo logo-bg-dark--team-${team?.id}`}></div>
-        </Grid>
-        <Grid item>
-            <Typography variant="h2">
-                {team?.name}
-            </Typography>
-        </Grid>
-        <Grid>
-            <Typography variant="h4">
-                ({leagueRecord?.wins}-{leagueRecord?.losses}-{leagueRecord?.ot})
-            </Typography>
-        </Grid>
-    </Grid>;
 }
 
 class ScoreboardLive extends Component {
@@ -228,6 +205,29 @@ class ScoreboardLive extends Component {
             </div>
         </div>
     }
+}
+
+const ScoreboardTeamInfo = ({team, leagueRecord}) => {
+    return <Grid container
+                 direction="column"
+                 justify="center"
+                 alignItems="center"
+    >
+        <Grid item>
+            <div style={{width: 600, height: 600}}
+                 className={`team-logo logo-bg-dark--team-${team?.id}`}></div>
+        </Grid>
+        <Grid item>
+            <Typography variant="h2">
+                {team?.name}
+            </Typography>
+        </Grid>
+        <Grid>
+            <Typography variant="h4">
+                ({leagueRecord?.wins}-{leagueRecord?.losses}-{leagueRecord?.ot})
+            </Typography>
+        </Grid>
+    </Grid>;
 }
 
 const isToday = (someDate) => {

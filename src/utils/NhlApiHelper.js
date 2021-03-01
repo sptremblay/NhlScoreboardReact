@@ -20,11 +20,19 @@ function getGameDetail(id) {
     return axios.get('https://statsapi.web.nhl.com/api/v1/game/'+ id +'/feed/live');
 }
 
-// function get(id) {
-//     return axios.get('https://statsapi.web.nhl.com/api/v1/teams/'+id+'?expand=team.stats');
-// }
+function getTeam(id){
+    return axios.get('https://statsapi.web.nhl.com/api/v1/teams/' + id);
+}
 
-var NhlApiHelper = {
+function getTeamPreviousGame(id){
+    return axios.get('https://statsapi.web.nhl.com/api/v1/teams/'+id+'/?expand=team.schedule.previous');
+}
+
+function getTeamStats(id) {
+    return axios.get('https://statsapi.web.nhl.com/api/v1/teams/'+id+'?expand=team.stats');
+}
+
+export const NhlApiHelper = {
     getPlayersFromSearchSuggestions: function (input) {
         return axios.all([searchSuggestions(input)])
             .then(
@@ -80,7 +88,29 @@ var NhlApiHelper = {
                     return {game: response[0].data}
                 }
             )
+    },
+    getTeam: function(id){
+        return axios.all([getTeam(id)])
+            .then(
+                (response) =>{
+                    return {team: response[0].data}
+                }
+            )
+    },
+    getTeamPreviousGame: function(id){
+        return axios.all([getTeamPreviousGame(id)])
+            .then(
+                (response) =>{
+                    return {team: response[0].data}
+                }
+            )
+    },
+    getTeamStats: function(id) {
+        return axios.all([getTeamStats(id)])
+            .then(
+                (response) =>{
+                    return {team: response[0].data}
+                }
+            )
     }
 }
-
-module.exports = NhlApiHelper;
