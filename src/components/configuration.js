@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Checkbox, FormControlLabel} from "@material-ui/core";
 import {useFetch} from "../utils/hooks";
 
@@ -8,9 +8,9 @@ export default function Configuration() {
 
     const {status, data, error} = useFetch(url);
 
-    const [checkedItems] = useState({
-        checkedItems: new Map()
-    });
+    // const [checkedItems] = useState({
+    //     checkedItems: new Map()
+    // });
 
     const handleChange = (event) => {
         console.log(event);
