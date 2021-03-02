@@ -12,7 +12,7 @@ export default function ConfigurationView() {
 
     const handleChange = (event) => {
         const teamId = parseInt(event.target.value);
-        let selectedTeams = [...prefferedTeams];
+        let selectedTeams = prefferedTeams?[...prefferedTeams]:[];
         if (event.target.checked) {
             selectedTeams.push(teamId);
         } else {
@@ -42,7 +42,7 @@ export default function ConfigurationView() {
                                 <FormControlLabel
                                     control={<Checkbox onChange={handleChange}
                                                        value={team.id}
-                                                       checked={prefferedTeams.indexOf(team.id) > -1}
+                                                       checked={prefferedTeams?.indexOf(team.id) > -1}
                                                        name={`team${team.id}`}/>}
                                     label={<>
                                         <div style={{width: 50, height: 50}}
