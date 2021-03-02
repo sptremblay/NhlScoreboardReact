@@ -4,7 +4,7 @@ import { BrowserRouter as Router,
   Route } from 'react-router-dom';
 import Scoreticker from "./components/scoreticker";
 import TeamSummary from "./components/teamsummary";
-import Configuration from "./components/configuration";
+import ConfigurationView from "./components/configuration";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
             <TeamSummary />
           </Route>
           <Route path="/configuration">
-            <Configuration />
+            <ConfigurationView />
           </Route>
           <Route path="/">
             <Scoreticker />

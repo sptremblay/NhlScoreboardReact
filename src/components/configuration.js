@@ -1,36 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import {Checkbox, FormControlLabel} from "@material-ui/core";
 import {useFetch} from "../utils/hooks";
+import {Configuration} from "../utils/Configuration";
+import './configuration.css';
 
-
-export default function Configuration() {
+export default function ConfigurationView() {
+    const [prefferedTeams, setPrefferedTeams] = useState(Configuration.getPrefferedTeams());
     const url = 'https://statsapi.web.nhl.com/api/v1/teams';
 
     const {status, data, error} = useFetch(url);
 
-    // const [checkedItems] = useState({
-    //     checkedItems: new Map()
-    // });
-
     const handleChange = (event) => {
-        console.log(event);
-        const isChecked = event.target.checked;
-        const item = event.target.value;
-        this.setState(prevState => {
-            console.log(prevState);
-            return { checkedItems: prevState.checkedItems.set(item, isChecked) }});
+        const teamId = parseInt(event.target.value);
+        let selectedTeams = [...prefferedTeams];
+        if (event.target.checked) {
+            selectedTeams.push(teamId);
+        } else {
+            selectedTeams.splice(selectedTeams.indexOf(teamId), 1);
+        }
+
+        setPrefferedTeams(selectedTeams);
+        Configuration.setPrefferedTeams(selectedTeams);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(e);
-    }
-
-    const teams = data.teams;
-
+    let teams = data.teams;
+    teams = teams?.sort((a, b) => (a.name > b.name) ? 1 : -1)
 
     return (
         <div>
+            <h1>Select your preffered team</h1>
             {status === 'idle' && (
                 <div> Let's get started by searching for an article! </div>
             )}
@@ -38,20 +36,24 @@ export default function Configuration() {
             {status === 'fetching' && <div className="loading"></div>}
             {status === 'fetched' && <>
                 <div>
-                    <form className="Form" onSubmit={handleSubmit}>
+                    <ul>
                         {teams.map((team) => (
-                            <div>
+                            <li>
                                 <FormControlLabel
                                     control={<Checkbox onChange={handleChange}
                                                        value={team.id}
+                                                       checked={prefferedTeams.indexOf(team.id) > -1}
                                                        name={`team${team.id}`}/>}
-                                    label={team.name}
+                                    label={<>
+                                        <div style={{width: 50, height: 50}}
+                                             className={`team-logo logo-bg-dark--team-${team?.id}`}></div>
+                                        {team.name}
+                                    </>}
                                 />
-                            </div>
+                            </li>
                         ))
                         }
-                        <button> Save</button>
-                    </form>
+                    </ul>
                 </div>
             </>
             }
