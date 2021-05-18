@@ -214,16 +214,15 @@ const ScoreboardTeamInfo = ({team, leagueRecord}) => {
                  alignItems="center"
     >
         <Grid item>
-            <div style={{width: 600, height: 600}}
-                 className={`team-logo logo-bg-dark--team-${team?.id}`}></div>
+            <div className={`team-logo logo-bg-dark--team-${team?.id}`}></div>
         </Grid>
         <Grid item>
-            <Typography variant="h2">
+            <Typography variant="h4">
                 {team?.name}
             </Typography>
         </Grid>
         <Grid>
-            <Typography variant="h4">
+            <Typography variant="h6">
                 ({leagueRecord?.wins}-{leagueRecord?.losses}-{leagueRecord?.ot})
             </Typography>
         </Grid>
