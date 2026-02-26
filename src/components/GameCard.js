@@ -43,9 +43,7 @@ const GameCard = ({ game }) => {
                     {/* Away Team */}
                     <Grid item>
                         <TeamInfo 
-                            team={awayTeam} 
-                            score={goals?.away}
-                            showScore={!isPregame}
+                            team={awayTeam}
                         />
                     </Grid>
 
@@ -87,9 +85,7 @@ const GameCard = ({ game }) => {
                     {/* Home Team */}
                     <Grid item>
                         <TeamInfo 
-                            team={homeTeam} 
-                            score={goals?.home}
-                            showScore={!isPregame}
+                            team={homeTeam}
                         />
                     </Grid>
                 </Grid>
@@ -101,7 +97,7 @@ const GameCard = ({ game }) => {
 /**
  * Component to display team information
  */
-const TeamInfo = ({ team, score, showScore }) => {
+const TeamInfo = ({ team }) => {
     if (!team) {
         return null;
     }
